@@ -32,7 +32,6 @@ def do_attack():
     print (Fore.GREEN + "[+] Sending Packets")
     for i in range(count):
         url = generate_url(apikey, get_searchterm())
-        print(url)
         response = requests.get(url, verify=False)
         if response.text.find("error_message") < 0:
             print(Fore.GREEN + f"[+] Packet sequence-{i+1} Succeed: No Error Message")

@@ -5,9 +5,9 @@ requests.packages.urllib3.disable_warnings()
 colorama.init(autoreset=True)
 
 def generate_url(apikey):
-    lat_a = random.randrange(-90,90)
+    lat_a = random.randrange(-89,90)
     lat_b = random.randrange(0,100000)
-    lng_a = random.randrange(-90,90)
+    lng_a = random.randrange(-89,90)
     lng_b = random.randrange(0,100000)
     return f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat_a}.{lat_b},{lng_a}.{lng_b}&key={apikey}"
 
