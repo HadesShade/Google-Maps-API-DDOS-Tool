@@ -1,0 +1,50 @@
+School
+Library
+Bookstore
+Post Office
+Pharmacy
+Hospital
+Police Station
+Bank
+Bus Stop
+Airport
+Train Station
+Petrol Station
+Hotel
+Church
+Factory
+Garage
+Restaurant
+Mall
+Beauty Salon
+City Hall
+Dry Cleaner Shop
+Gym
+Laundromat
+University
+College
+Amusement Park
+Bar
+Pub
+Movie Theater
+Museum
+Nightclub
+Park
+Stadium
+Zoo
+Bakery
+Butcher
+Cafe
+Restaurant
+Supermarker
+Clothing Store
+Departmental Store
+Florist
+Game Store
+Pet Store
+Footwear Store
+Shopping Centre
+Fire Station
+Jail
+Spa
+Dentist
