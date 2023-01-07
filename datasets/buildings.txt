@@ -48,3 +48,4 @@ Fire Station
 Jail
 Spa
 Dentist
+Museum of Contemporary Art
