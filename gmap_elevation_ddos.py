@@ -18,7 +18,7 @@ def do_attack():
     for i in range(count):
         url = generate_url(apikey)
         response = requests.get(url, verify=False)
-        if response.text.find("errorMessage") < 0:
+        if response.text.find("error_message") < 0:
             print(Fore.GREEN + f"[+] Packet sequence-{i+1} Succeed: No Error Message")
         else:
             print(Fore.RED + f"[-] Packet sequence-{i+1} Failed: Error Message Exist")
